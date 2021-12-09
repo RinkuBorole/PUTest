@@ -3,6 +3,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -92,12 +95,16 @@ Assert.assertEquals(actualTitle, expectedTitle);
 
 //Registration with all valid data
 @Test
-public void validRegistrationTest(){ 
+public void validRegistrationTest() throws InterruptedException{ 
 	
 	WebDriverWait wait = new WebDriverWait(driver, 1000);
+	
+Select Salutation = new Select(driver.findElement(By.id("ddlSalutation")));
+Salutation.selectByVisibleText("Dr");
+Thread.sleep(2000);
 
 WebElement FirstName = driver.findElement(By.id("txtFirstName"));
-FirstName.sendKeys("");
+FirstName.sendKeys("test");
 
 WebElement LastName = driver.findElement(By.id("txtLastName"));
 LastName.sendKeys("Name");
@@ -110,21 +117,43 @@ CompanyName.sendKeys("SIPL");
 
 WebElement CompanyAddress = driver.findElement(By.id("txtCompanyAddress"));
 CompanyAddress.sendKeys("SIPL");
+Thread.sleep(2000);
 
 WebElement City = driver.findElement(By.id("txtCity"));
 City.sendKeys("Kalyan");
+
+Select Country = new Select(driver.findElement(By.xpath("//select[contains(@name,'ddlCountry')]")));
+Country.selectByVisibleText("Angola");
+Thread.sleep(2000);
 
 WebElement State = driver.findElement(By.id("txtState"));
 State.sendKeys("Delhi");
 
 WebElement MobileNumber = driver.findElement(By.id("txtMobileNumber"));
 MobileNumber.sendKeys("9876543210");
+Thread.sleep(2000);
 
 WebElement BusinessPhoneNumber = driver.findElement(By.id("txtBusinessPhoneNumber"));
 BusinessPhoneNumber.sendKeys("9876543210");
 
 WebElement termsOfServices = driver.findElement(By.id("chkTermsConditions"));
 termsOfServices.click();
+
+Thread.sleep(2000);
+
+ChromeOptions options = new ChromeOptions();
+
+options.addArguments("start-maximized");
+
+options.addArguments("disable-infobars");
+
+options.addArguments("--disable-extensions");
+
+new WebDriverWait(driver, 10).until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.xpath("//iframe[starts-with(@name, 'a-') and starts-with(@src, 'https://www.google.com/recaptcha')]")));
+
+new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='recaptcha-checkbox-border']"))).click();
+
+Thread.sleep(2000);
 
 
 String expectedErrorMsg = "Please enter your First Name";
@@ -138,6 +167,9 @@ Assert.assertEquals(actualErrorMsg, expectedErrorMsg);
 
 WebElement signUp = driver.findElement(By.id("btnSubmit"));
 signUp.click();
+
+Thread.sleep(2000);
+
 /*
 String expectedURL = "https://accounts.lambdatest.com/email/verify";
 String actualURL = driver.getCurrentUrl();

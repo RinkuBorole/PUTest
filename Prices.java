@@ -475,13 +475,13 @@ public class Prices {
 
 			Login(driver);
 			Recycled_prices(driver);
-		//	Middle_East(driver);
-		//	China(driver);
-		//	Far_East_Asia(driver);
-		//	South_East_Asia(driver);
-		//	Europe(driver);
-		//	Turkey(driver);
-		//	USA_America(driver);
+			Middle_East(driver);
+			China(driver);
+			Far_East_Asia(driver);
+			South_East_Asia(driver);
+			Europe(driver);
+			Turkey(driver);
+			USA_America(driver);
 			
 			// Actions a = new Actions(driver);
 	 		 
